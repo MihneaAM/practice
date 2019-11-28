@@ -105,9 +105,34 @@ void vectorOfInt::print()
     cout << endl;
 }
 
+vectorOfInt & vectorOfInt::operator= (const vectorOfInt &other)
+{
+    // make sure we are NOT assigning to ourself
+    if (this != &other)
+    {
+        int *new_array = new int [other.capacity];
+        copy (other.arr, other.arr +  other.capacity, new_array);
+
+        delete[] this->arr;
+
+        this->arr = new_array;
+        this->curr_index = other.curr_index;
+        this->capacity = other.capacity;
+    }
+    
+    return *this;
+}
+
+vectorOfInt::vectorOfInt (const vectorOfInt &other)
+{
+    this->arr = other.arr;
+    this->capacity = other.capacity;
+    this->curr_index = other.curr_index;
+}
+
 int main (int argc, char *argv[])
 {
-    vectorOfInt v;
+    vectorOfInt v, v2;
 
     v.push_back (1);
     v.push_back (2);
@@ -118,6 +143,22 @@ int main (int argc, char *argv[])
 
     v.push_front (0);
     v.print();
+
+    v.push_front (1);
+    v.print();
+
+    v2.push_back(1);
+    v2.push_back(2);
+    cout << v2.size() << endl;
+
+    cout << v2.size() << endl;
+    v2 = v;
+    cout << v.size() << endl;
+    cout << v2.size() << endl;
+    v2.print();
+
+    vectorOfInt v3 = v2;
+    v3.print();
 
     return 0;
 }
