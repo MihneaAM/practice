@@ -125,9 +125,24 @@ vectorOfInt & vectorOfInt::operator= (const vectorOfInt &other)
 
 vectorOfInt::vectorOfInt (const vectorOfInt &other)
 {
-    this->arr = other.arr;
+    // this->arr = other.arr; // shallow copy
+
+    int *temp = new int [other.capacity];
+
+    for (int i = 0; i < other.curr_index; ++i)
+    {
+        temp[i] = other.arr[i];
+    }
+
+    this->arr = temp;
+    
     this->capacity = other.capacity;
     this->curr_index = other.curr_index;
+}
+
+vectorOfInt::~vectorOfInt()
+{
+    delete[] this->arr;
 }
 
 int main (int argc, char *argv[])
@@ -159,6 +174,10 @@ int main (int argc, char *argv[])
 
     vectorOfInt v3 = v2;
     v3.print();
+
+    v.~vectorOfInt();
+    v2.~vectorOfInt();
+    v3.~vectorOfInt();
 
     return 0;
 }
