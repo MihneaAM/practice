@@ -13,6 +13,7 @@ class vectorOfInt
     void push_front (int);
     vectorOfInt& operator= (const vectorOfInt &);
     vectorOfInt (const vectorOfInt &);
+    ~vectorOfInt();
     int size ();
     void print ();
 
